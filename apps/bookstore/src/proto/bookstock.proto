@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package bookstock;
+
+service BookStockService {
+  rpc pong(Empty) returns (Pong);
+  rpc Create(CreateBookStockDto) returns (BookStockResponse);
+  rpc FindAll(Empty) returns (BookStockList);
+  rpc FindOne(BookStockId) returns (BookStockResponse);
+  rpc FindStock(BookId) returns (BookStockResponse);
+  rpc Update(UpdateBookStockDto) returns (BookStockResponse);
+  rpc Remove(BookStockId) returns (DeleteResponse);
+  rpc CheckStock(CheckStockRequest) returns (StockCheckResponse);
+  rpc DecreaseStock(StockAdjustRequest) returns (StockAdjustResponse);
+  rpc IncreaseStock(StockAdjustRequest) returns (StockAdjustResponse);
+}
+
+message Empty {}
+
+message Pong {
+    string pong = 1;
+}
+message BookStockId {
+  string id = 1;
+}
+
+message BookId {
+  string book = 1;
+}
+
+message CreateBookStockDto {
+  string book = 1;
+  int32 stock = 2;
+}
+
+message UpdateBookStockDto {
+  string id = 1;
+  int32 stock = 2;
+}
+
+message BookStockResponse {
+  string id = 1;
+  string book = 2;
+  int32 stock = 3;
+}
+
+message BookStockList {
+  repeated BookStockResponse stocks = 1;
+}
+
+message DeleteResponse {
+  string message = 1;
+}
+
+message CheckStockRequest {
+  string book = 1;
+  int32 quantity = 2;
+}
+
+message StockCheckResponse {
+  bool available = 1;
+  string message = 2;
+}
+
+message StockAdjustRequest {
+  string book = 1;
+  int32 quantity = 2;
+}
+
+message StockAdjustResponse {
+  bool success = 1;
+  string message = 2;
+}
